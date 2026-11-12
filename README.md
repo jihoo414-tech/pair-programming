@@ -84,10 +84,14 @@ AI가 기존 구현을 분석해줘. 테스트의 정답 코드는 먼저 보여
 skills/progressive-pair-programming/
 ├── SKILL.md                         # 시작, 소유권, 진행 및 기록
 ├── agents/openai.yaml               # Codex 명시적 호출 설정
+├── evals/                           # 행동 평가 케이스 5개
 └── references/
     ├── capability-levels.md         # L0–L3와 승급 근거
-    ├── coaching-rules.md            # H1–H5 힌트와 파일 소유권
-    └── competency-check.md          # 역량 검증 요청 시 절차
+    ├── coaching-rules.md            # H1–H5 힌트, 막혔을 때 대응, 파일 소유권
+    ├── competency-check.md          # 역량 검증 요청 시 절차
+    └── record-format.md             # session-log·Capability Map 기록 형식
 ```
+
+`evals/`의 케이스는 `skills/progressive-pair-programming/`에서 `claude plugin eval . --scaffold --allow-tools Write,Edit,Bash`로 실행할 수 있습니다. 실제 모델 호출이라 비용이 듭니다. 이 평가는 스킬이 규칙대로 행동하는지 확인할 뿐, 학습 효과를 측정하지는 않습니다.
 
 이 스킬은 TicketFlow 프로젝트에서 AI와의 협업 과정을 관리하기 위해 작성한 스킬을 다른 프로젝트에서도 사용할 수 있도록 정리한 것입니다.
