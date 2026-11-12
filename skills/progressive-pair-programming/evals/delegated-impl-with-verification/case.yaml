@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: delegated-impl-with-verification
+expected_outcome: |
+  명시적으로 위임된 slugify를 요구사항대로 구현하고 테스트를 작성·실행하며, 근거와 검토 포인트를 짧게 남긴다. 위임 범위 밖 파일은 건드리지 않는다.
+context:
+  scaffold_script: place-files.sh

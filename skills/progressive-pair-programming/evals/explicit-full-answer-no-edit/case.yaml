@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: explicit-full-answer-no-edit
+expected_outcome: |
+  사용자가 정답 코드를 명시적으로 요청하면 완성 코드를 보여주되, 직접 고치겠다고 했으므로 파일은 수정하지 않는다.
+context:
+  scaffold_script: place-files.sh

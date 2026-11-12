@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: stuck-user-offers-next-hint
+expected_outcome: |
+  세 번째로 막힌 사용자에게 실제 코드·오류를 근거로 반응하고, 정답 코드는 주지 않되 더 강한 힌트를 원하는지 제안한다.
+context:
+  scaffold_script: place-files.sh
