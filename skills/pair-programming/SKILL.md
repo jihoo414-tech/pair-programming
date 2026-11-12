@@ -1,10 +1,10 @@
 ---
-name: progressive-pair-programming
+name: pair-programming
 description: "Manually invoked progressive pair programming and AI delegation coaching."
 disable-model-invocation: true
 ---
 
-# Progressive Pair Programming
+# Pair Programming
 
 이 스킬은 사용자가 명시적으로 호출한 현재 작업에서만 적용한다. 종료 또는 작업 중단 요청 시 코칭을 중지한다. 일반 세션이나 다른 스킬에서 자동 실행하지 않는다.
 
@@ -20,7 +20,7 @@ disable-model-invocation: true
 처음 호출할 때는 알려진 값은 채우고 미정은 표시해 간결하게 출력한다. 이어서 진행하는 턴에서는 바뀐 항목만 한 줄로 알린다.
 
 ```text
-Progressive Pair Programming 활성화
+Pair Programming 활성화
 
 작업 목표:
 사용자 몫 (파일·함수):

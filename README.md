@@ -1,4 +1,4 @@
-# Progressive Pair Programming
+# Pair Programming
 
 AI가 개발을 대신하는 범위와 개발자가 직접 학습·구현하는 범위를 작업마다 정하는 페어 프로그래밍 스킬입니다. 개발자가 이해하지 못한 채 구현이 끝나는 상황을 줄이고, 역량이 쌓이면 근거를 확인하며 위임 범위를 조정하도록 설계했습니다.
 
@@ -6,10 +6,27 @@ AI가 개발을 대신하는 범위와 개발자가 직접 학습·구현하는 
 
 ## 어떻게 동작하나요?
 
-1. 작업 목표와 개발자·AI가 각각 구현할 범위, 검증 방법을 정합니다.
-2. 구체적인 작업 영역마다 협업 수준을 선택합니다. 새로운 학습 영역에는 L0를 제안하며, 사용자가 결정합니다.
-3. 사용자가 직접 구현하는 영역에서는 질문부터 시작해 요청에 따라 단계적으로 힌트를 제공합니다. AI에 위임한 영역에서는 합의된 범위를 구현하고 검증 근거를 설명합니다.
-4. 작업을 마칠 때 수행 범위와 테스트 결과, 남은 과제를 기록합니다. 레벨 변경은 근거를 제시하고 사용자가 승인한 경우에만 반영합니다.
+1. **범위 정하기:** 작업 목표, 개발자 몫과 AI 몫, 검증 방법을 정합니다. 소유권은 파일·함수 단위로 적습니다. 한 파일에 두 사람 몫이 섞여도 무엇을 고쳐도 되는지 분명해집니다.
+2. **수준 고르기:** 작업 영역마다 협업 수준(L0–L3)과 힌트 수준(H1–H5)을 고릅니다. 새로운 학습 영역에는 L0를 제안하고, 결정은 사용자가 합니다.
+3. **함께 진행하기:**
+   - 사용자가 직접 구현하는 영역에서는 질문 한두 개로 시작합니다. 같은 문제로 거듭 막히면 다음 힌트 수준으로 올릴지 묻습니다. 동의 없이 올리지는 않습니다.
+   - AI에 위임한 영역에서는 합의된 범위를 구현하고 테스트와 설계 근거를 설명합니다. 마지막에 검수를 돕는 확인 질문을 하나 남기며, 답하지 않아도 됩니다.
+4. **기록하기:** 작업을 마칠 때 수행 범위, 테스트 결과, 지식 공백, 다음 과제를 정해진 형식으로 기록합니다. 레벨 변경은 근거를 제시하고 사용자가 승인한 경우에만 반영합니다. "이제 AI한테 맡겨도 될까?"라는 질문은 승인이 아니라 판단 요청으로 다룹니다.
+
+처음 호출하면 다음과 같은 시작 블록을 보여 줍니다. 이어서 진행하는 턴에서는 바뀐 항목만 한 줄로 알립니다.
+
+```text
+Pair Programming 활성화
+
+작업 목표:
+사용자 몫 (파일·함수):
+AI 몫 (파일·함수):
+적용 레벨:
+힌트 수준:
+진행 방식:
+```
+
+### 협업 수준
 
 | 수준 | 협업 방식 |
 | --- | --- |
@@ -18,7 +35,19 @@ AI가 개발을 대신하는 범위와 개발자가 직접 학습·구현하는 
 | L2 | 개발자가 요구사항과 검증 기준을 정하고 AI 구현을 검토 |
 | L3 | AI가 합의된 범위의 설계·구현·검증을 진행하고 개발자가 검수 |
 
-수준은 사람 전체의 능력 점수가 아니라 **특정 작업의 소유권과 위임 범위**입니다. 영역마다 다르게 적용하고 언제든 변경할 수 있습니다. TDD는 사용자가 선택할 때만 적용합니다.
+수준은 사람 전체의 능력 점수가 아니라 **특정 작업의 소유권과 위임 범위**입니다. 영역마다 다르게 적용하고 언제든 바꿀 수 있습니다. L3라도 데이터 삭제, 인증·인가 변경, 배포 같은 되돌리기 어려운 작업은 따로 승인받습니다. TDD는 사용자가 선택할 때만 적용합니다.
+
+### 힌트 수준
+
+| 수준 | 내용 |
+| --- | --- |
+| H1 | 문제 해결을 유도하는 질문 (기본값) |
+| H2 | 관련 개념과 핵심 불변식 설명 |
+| H3 | 구현 방향이나 의사코드 |
+| H4 | 제한적인 부분 코드 예시 |
+| H5 | 명시적으로 요청한 경우 전체 구현 코드 |
+
+코드를 보여 달라는 요청은 파일 수정 승인이 아닙니다. "정답 보여줘, 파일은 내가 고칠게"라고 하면 코드만 보여 주고 파일은 건드리지 않습니다.
 
 ## 빠르게 사용해 보기
 
@@ -35,7 +64,7 @@ Claude Code에서 특정 프로젝트에 설치하려면 해당 프로젝트 루
 ```bash
 PAIR_REPO="/path/to/pair-programming"
 mkdir -p .claude/skills
-cp -R "$PAIR_REPO/skills/progressive-pair-programming" .claude/skills/
+cp -R "$PAIR_REPO/skills/pair-programming" .claude/skills/
 ```
 
 Codex에 사용자 범위로 설치하려면:
@@ -43,7 +72,7 @@ Codex에 사용자 범위로 설치하려면:
 ```bash
 PAIR_REPO="/path/to/pair-programming"
 mkdir -p ~/.codex/skills
-cp -R "$PAIR_REPO/skills/progressive-pair-programming" ~/.codex/skills/
+cp -R "$PAIR_REPO/skills/pair-programming" ~/.codex/skills/
 ```
 
 Windows PowerShell의 경우 `PAIR_REPO`를 실제 경로로 바꾼 뒤 실행합니다.
@@ -51,16 +80,19 @@ Windows PowerShell의 경우 `PAIR_REPO`를 실제 경로로 바꾼 뒤 실행�
 ```powershell
 $PAIR_REPO = 'C:\path\to\pair-programming'
 New-Item -ItemType Directory -Force "$HOME\.codex\skills" | Out-Null
-Copy-Item -Recurse "$PAIR_REPO\skills\progressive-pair-programming" "$HOME\.codex\skills\"
+Copy-Item -Recurse "$PAIR_REPO\skills\pair-programming" "$HOME\.codex\skills\"
 ```
 
 Claude Code 프로젝트 설치 시 대상 경로는 해당 프로젝트의 `.claude\skills\`입니다. 기존에 같은 이름의 스킬이 있다면 먼저 내용을 확인하세요. 설치 후 도구가 스킬을 인식하지 못하면 세션을 새로 시작합니다.
 
+- 이전 이름(`progressive-pair-programming`)으로 설치했다면 그 폴더를 지우고 새로 설치하세요. 두 개가 함께 있으면 둘 다 호출 목록에 나타납니다.
+- 설치한 폴더의 `evals/`는 스킬 동작에 필요하지 않습니다. 지워도 됩니다.
+
 ### 3. 명시적으로 호출
 
 ```text
-Claude Code: /progressive-pair-programming
-Codex: $progressive-pair-programming
+Claude Code: /pair-programming
+Codex: $pair-programming
 ```
 
 이어서 다음과 같이 작업 범위를 전달할 수 있습니다.
@@ -70,18 +102,23 @@ Codex: $progressive-pair-programming
 AI가 기존 구현을 분석해줘. 테스트의 정답 코드는 먼저 보여주지 말아줘.
 ```
 
-위는 동작을 보여주기 위한 예시이며 실제 세션 기록이 아닙니다. 스킬은 작업 목표, 각자의 구현 범위, 수준과 진행 방식을 확인한 뒤 시작합니다. 사용자가 소유한 구현은 느리다는 이유만으로 대신 수정하지 않습니다.
+위는 동작을 보여 주기 위한 예시이며 실제 세션 기록이 아닙니다. 스킬은 작업 목표, 각자의 구현 범위, 수준과 진행 방식을 확인한 뒤 시작합니다. 사용자가 소유한 구현은 느리다는 이유만으로 대신 수정하지 않습니다.
 
 ## 기록과 개인정보
 
-스킬은 **작업 대상 프로젝트**의 `docs/learning/capability-map.md`와 `docs/learning/session-log.md`를 확인합니다. 처음에는 파일이 없어도 됩니다. 작업 종료 시 세션 로그를 만들거나 기존 로그에 추가하고, 레벨을 저장하기로 승인한 경우에만 Capability Map을 만듭니다. 기록을 원하지 않으면 시작할 때 알려주세요. 파일 대신 대화에 요약합니다.
+스킬은 **작업 대상 프로젝트**의 `docs/learning/capability-map.md`와 `docs/learning/session-log.md`를 확인합니다. 처음에는 파일이 없어도 됩니다.
 
-기록은 해당 프로젝트에 저장되며 이 저장소로 자동 전송되지 않습니다. 사용자 자신의 작업 기록에 민감한 정보가 포함되지 않도록 확인한 뒤 커밋하거나 공유하세요. 이 공개 저장소에는 개인 학습 기록을 포함하지 않았습니다.
+- **session-log:** 작업을 마치거나 중단할 때 만들거나 기존 로그에 추가합니다. 목표, 각자의 몫, 레벨과 힌트 수준, 확인한 개념과 미확인 개념, 테스트 결과, 지식 공백, 다음 과제, 레벨 조정 제안을 [고정된 형식](skills/pair-programming/references/record-format.md)으로 남깁니다. 다음 세션이 이 기록을 읽고 레벨을 판단합니다.
+- **Capability Map:** 레벨을 저장하기로 승인한 경우에만 만들거나 고칩니다.
+
+기록을 원하지 않으면 시작할 때 알려 주세요. 파일 대신 대화에 요약합니다.
+
+기록은 해당 프로젝트에 저장되며 이 저장소로 자동 전송되지 않습니다. 작업 기록에 민감한 정보가 없는지 확인한 뒤 커밋하거나 공유하세요. 이 공개 저장소에는 개인 학습 기록을 포함하지 않았습니다.
 
 ## 구성
 
 ```text
-skills/progressive-pair-programming/
+skills/pair-programming/
 ├── SKILL.md                         # 시작, 소유권, 진행 및 기록
 ├── agents/openai.yaml               # Codex 명시적 호출 설정
 ├── evals/                           # 행동 평가 케이스 5개
@@ -92,6 +129,27 @@ skills/progressive-pair-programming/
     └── record-format.md             # session-log·Capability Map 기록 형식
 ```
 
-`evals/`의 케이스는 `skills/progressive-pair-programming/`에서 `claude plugin eval . --scaffold --allow-tools Write,Edit,Bash`로 실행할 수 있습니다. 실제 모델 호출이라 비용이 듭니다. 이 평가는 스킬이 규칙대로 행동하는지 확인할 뿐, 학습 효과를 측정하지는 않습니다.
+## 행동 평가
+
+`evals/`에는 스킬이 규칙대로 행동하는지 확인하는 케이스 5개가 있습니다.
+
+| 케이스 | 확인하는 것 |
+| --- | --- |
+| `l0-new-area-no-takeover` | 처음 배우는 영역에서 파일을 고치거나 정답을 주지 않고, 질문 한두 개로 시작하는지 |
+| `stuck-user-offers-next-hint` | 거듭 막힌 사용자에게 실제 오류를 근거로 반응하고, 다음 힌트 수준을 원하는지 묻는지 |
+| `explicit-full-answer-no-edit` | 정답을 요청하면 코드를 보여 주되 파일은 수정하지 않는지 |
+| `delegated-impl-with-verification` | 위임받은 구현을 테스트까지 마치고, 근거와 선택형 확인 질문을 남기는지 |
+| `session-end-record-no-auto-promote` | 세션 로그를 남기고, 승인 없이 레벨을 올리지 않는지 |
+
+`skills/pair-programming/`에서 `claude plugin eval . --scaffold --allow-tools Write,Edit,Bash`로 실행할 수 있습니다. 실제 모델 호출이라 비용이 듭니다.
+
+최근 결과(구성마다 케이스당 1회 실행)는 다음과 같습니다.
+
+| 비교 (각각 다른 평가 항목 세트) | 통과율 |
+| --- | --- |
+| 이전 버전 vs 스킬 없음 (항목 19개) | 100% vs 75% |
+| 현재 버전 vs 이전 버전 (새 행동 항목 3개 추가, 22개) | 100% vs 89% |
+
+스킬이 없을 때 가장 크게 차이가 난 부분은 사용자가 묻기만 했는데 Capability Map 레벨을 마음대로 올린 것과, 세션 로그를 남기지 않은 것입니다. 실행 횟수가 적어서 이 수치는 경향만 보여 줍니다. 이 평가는 행동 규칙을 지키는지만 확인하며, 학습 효과를 측정하지는 않습니다.
 
 이 스킬은 TicketFlow 프로젝트에서 AI와의 협업 과정을 관리하기 위해 작성한 스킬을 다른 프로젝트에서도 사용할 수 있도록 정리한 것입니다.
