@@ -1,0 +1,6 @@
+interface:
+  display_name: "Pair Programming"
+  short_description: "개발자와 AI의 구현 범위를 정하고 함께 학습합니다"
+  default_prompt: "$pair-programming 스킬로 구현 범위와 검증 기준을 정하고 작업을 시작해줘."
+policy:
+  allow_implicit_invocation: false
